@@ -40,7 +40,7 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
                console.log("error", clientsError);
             });
       }
-   }, [props.isLoad]);
+   }, []);
 
    return (
       <AsteroidTableRowWrapper>
