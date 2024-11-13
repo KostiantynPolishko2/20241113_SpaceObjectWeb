@@ -1,15 +1,51 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { AsteroidTableWrapper } from './AsteroidTable.styled';
+import AsteroidTableTitle from './AsteroidTableTitle';
+import AsteroidTableRow from './AsteroidTableRow';
 
 interface AsteroidTableProps {
-   img_path: string
+
 }
 
-const AsteroidTable: FC<AsteroidTableProps> = (props) => (
- <AsteroidTableWrapper>
-    AsteroidTable Component
-    <img src={props.img_path} alt='logo'/>
- </AsteroidTableWrapper>
-);
+const AsteroidTable: FC<AsteroidTableProps> = () => {
+
+   const [isDisplay, setIsDisplay] = useState<boolean>(false);
+   const [display, setDisplay] = useState<string>('none');
+   const [btnTitle, setBtnTitle] = useState<string>('SHOW');
+
+
+   const handleDisplay = () => {
+       setIsDisplay(!isDisplay);
+   };
+
+   useEffect(()=> {   
+      if(isDisplay){
+         setDisplay('block');
+         setBtnTitle('HIDE');
+      }
+      else{
+         setDisplay('none');
+         setBtnTitle('SHOW');
+      }
+   }
+   , [isDisplay]);
+
+   return (
+      <AsteroidTableWrapper>
+         <div className="table-container">
+            <div className="table-header">
+                <h2>Space Objects</h2>
+                <button className="download-button" onClick={handleDisplay}>{btnTitle}</button>
+            </div>
+            <div style={{display: display}}>
+                <table>
+                    <AsteroidTableTitle/>
+                    <AsteroidTableRow isLoad={isDisplay}/>
+                </table>
+            </div>
+         </div>
+      </AsteroidTableWrapper>
+   );
+}
 
 export default AsteroidTable;
