@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import axios from 'axios';
 import { AsteroidTableRowWrapper } from './AsteroidTableRow.styled';
 import './AsteroidTable.css';
@@ -25,22 +25,6 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
        method: 'get',
        responseType: 'json'
    });
-
-   const handleRequest = () => {
-
-       if(props.isLoad){
-           console.log('call axios');
-           productOrderRequest.get('asteroiditems')
-           .then(responce => {
-               setAsteroidItemsDto(responce.data);
-               console.log("data", asteroidItemsDto);
-           })
-           .catch(error => {
-               setClientsError(error);
-               console.log("error", clientsError);
-           });
-       }
-   };
 
    return (
       <AsteroidTableRowWrapper>
