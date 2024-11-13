@@ -40,7 +40,7 @@ const AsteroidTable: FC<AsteroidTableProps> = () => {
             <div style={{display: display}}>
                 <table>
                     <AsteroidTableTitle/>
-                    <AsteroidTableRow isLoad={isDisplay}/>
+                    {/* <AsteroidTableRow isLoad={isDisplay}/> */}
                 </table>
             </div>
          </div>
