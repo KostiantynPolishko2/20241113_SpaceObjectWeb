@@ -33,11 +33,9 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
          productOrderRequest.get('asteroiditems')
          .then(responce => {
             setAsteroidItemsDto(responce.data);
-            console.log("data", asteroidItemsDto);
          })
          .catch(error => {
             setClientsError(error);
-            console.log("error", clientsError);
          });
       }
    }, []);
