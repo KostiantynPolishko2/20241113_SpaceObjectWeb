@@ -1,8 +1,8 @@
-import React, { FC, useState, useEffect } from 'react';
-import { AsteroidTableWrapper } from './AsteroidTable.styled';
+import React, { FC, useState, useEffect, useContext } from 'react';
 import AsteroidTableTitle from './AsteroidTableTitle';
 import AsteroidTableRow from './AsteroidTableRow';
 import './AsteroidTable.css';
+import { HandleNameContext } from '../Asteroid/Asteroid';
 
 interface AsteroidTableProps {
 
@@ -14,6 +14,7 @@ const AsteroidTable: FC<AsteroidTableProps> = () => {
    const [display, setDisplay] = useState<string>('none');
    const [btnTitle, setBtnTitle] = useState<string>('SHOW');
 
+   const _handleName = useContext(HandleNameContext);
 
    const handleDisplay = () => {
        setIsDisplay(!isDisplay);
@@ -27,6 +28,7 @@ const AsteroidTable: FC<AsteroidTableProps> = () => {
       else{
          setDisplay('none');
          setBtnTitle('SHOW');
+         _handleName(null);
       }
    }
    , [isDisplay]);
