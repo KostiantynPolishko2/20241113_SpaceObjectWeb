@@ -2,7 +2,11 @@ import React, {FC} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const App: FC = () => {
+interface IInfo {
+  text: string
+}
+
+const App: FC<IInfo> = (props) => {
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +22,7 @@ const App: FC = () => {
         >
           Learn React
         </a>
+        <p>message is {props.text}</p>
       </header>
     </div>
   );
