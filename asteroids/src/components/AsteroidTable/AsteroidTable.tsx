@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { AsteroidTableWrapper } from './AsteroidTable.styled';
 import AsteroidTableTitle from './AsteroidTableTitle';
 import AsteroidTableRow from './AsteroidTableRow';
+import './AsteroidTable.css';
 
 interface AsteroidTableProps {
 
@@ -31,20 +32,18 @@ const AsteroidTable: FC<AsteroidTableProps> = () => {
    , [isDisplay]);
 
    return (
-      <AsteroidTableWrapper>
-         <div className="table-container">
-            <div className="table-header">
-                <h2>Space Objects</h2>
-                <button className="download-button" onClick={handleDisplay}>{btnTitle}</button>
-            </div>
-            <div style={{display: display}}>
-                <table>
-                    <AsteroidTableTitle/>
-                    <AsteroidTableRow isLoad={isDisplay}/>
-                </table>
-            </div>
+      <div className="table-container">
+         <div className="table-header">
+            <h2>Space Objects</h2>
+            <button className="download-button" onClick={handleDisplay}>{btnTitle}</button>
          </div>
-      </AsteroidTableWrapper>
+         <div style={{display: display}}>
+            <table>
+               <AsteroidTableTitle/>
+               <AsteroidTableRow isLoad={isDisplay}/>
+            </table>
+         </div>
+      </div>
    );
 }
 
