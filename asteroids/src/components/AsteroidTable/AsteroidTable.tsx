@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { AsteroidTableWrapper } from './AsteroidTable.styled';
-import '../../App.css'
 
 interface AsteroidTableProps {
    img_path: string
@@ -9,7 +8,7 @@ interface AsteroidTableProps {
 const AsteroidTable: FC<AsteroidTableProps> = (props) => (
  <AsteroidTableWrapper>
     AsteroidTable Component
-    <img src={props.img_path} className='App-logo' alt='logo'/>
+    <img src={props.img_path} alt='logo'/>
  </AsteroidTableWrapper>
 );
 
