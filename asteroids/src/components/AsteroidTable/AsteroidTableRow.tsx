@@ -47,17 +47,11 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
    }, [props.isLoad]);
 
    return (
-      // <AsteroidTableRowWrapper>
-            <tbody>
-               {asteroidItemsDto.map((item, i) => (
-                  <tr key={i + 1}>
-                     <td>{i + 1}</td>
-                     <td>{item.name}</td>
-                     <td>{item.type}</td>
-                  </tr>
-               ))}
+      <AsteroidTableRowWrapper>
+         <tbody>
+            <p>rows</p>
          </tbody>
-      // </AsteroidTableRowWrapper>
+      </AsteroidTableRowWrapper>
    );
 }
 
