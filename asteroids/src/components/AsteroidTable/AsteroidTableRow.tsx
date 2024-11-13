@@ -26,25 +26,21 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
        responseType: 'json'
    });
 
-   const handleRequest = () => {
-
-       if(props.isLoad){
-           console.log('call axios');
-           productOrderRequest.get('asteroiditems')
-           .then(responce => {
+   useEffect(() => 
+      {
+         if(props.isLoad){
+            console.log('call axios');
+            productOrderRequest.get('asteroiditems')
+            .then(responce => {
                setAsteroidItemsDto(responce.data);
                console.log("data", asteroidItemsDto);
-           })
-           .catch(error => {
+            })
+            .catch(error => {
                setClientsError(error);
                console.log("error", clientsError);
-           });
-       }
-   };
-
-   useEffect(() => {
-         handleRequest();
-   }, [props.isLoad, handleRequest]);
+            });
+      }
+   }, [props.isLoad]);
 
    return (
       <AsteroidTableRowWrapper>
