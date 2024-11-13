@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useCallback } from 'react';
+import React, { FC, useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import { AsteroidTableRowWrapper } from './AsteroidTableRow.styled';
 import './AsteroidTable.css';
@@ -16,20 +16,22 @@ type TListRow = {
    isLoad: boolean,
 }
 
+
 const AsteroidTableRow: FC<TListRow> = (props) => {
    const [asteroidItemsDto, setAsteroidItemsDto] = useState<Array<IAsteroidItemDto>>([]);
    const [clientsError, setClientsError] = useState<IError | null>(null)
 
-   const productOrderRequest = axios.create({
-       baseURL: 'https://spaceobjectsserver.azurewebsites.net/api/SpaceObject',
-       method: 'get',
-       responseType: 'json'
-   });
+   const productOrderRequest = useMemo(() => 
+      axios.create({
+        baseURL: 'https://spaceobjectsserver.azurewebsites.net/api/SpaceObject',
+        method: 'get',
+        responseType: 'json',
+      }), []
+    );
 
    const handleRequest = useCallback(() => {
 
       if(props.isLoad){
-         console.log('call axios');
          productOrderRequest.get('asteroiditems')
          .then(responce => {
             setAsteroidItemsDto(responce.data);
@@ -38,11 +40,19 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
             setClientsError(error);
          });
       }
-   }, []);
+   }, [props.isLoad, productOrderRequest]);
 
    useEffect(() => {
          handleRequest();
-   }, [props.isLoad, handleRequest]);
+   }, [handleRequest]);
+
+   if (clientsError != null){
+      return (
+         <AsteroidTableRowWrapper>
+            <h3>Error401! Bad request.</h3>
+         </AsteroidTableRowWrapper>
+      );
+   }
 
    return (
       <AsteroidTableRowWrapper>
