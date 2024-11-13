@@ -42,10 +42,6 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
        }
    };
 
-   useEffect(() => {
-       handleRequest();
-   }, [props.isLoad]);
-
    return (
       <AsteroidTableRowWrapper>
          <tbody>
