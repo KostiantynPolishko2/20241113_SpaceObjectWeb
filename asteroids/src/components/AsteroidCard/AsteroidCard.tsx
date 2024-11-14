@@ -7,7 +7,8 @@ type AsteroidInfoDto = {
   category: string, 
   size: number,
   weight: number,
-  speed: number
+  speed: number,
+  image_path: string
 }
 
 interface IError {
@@ -64,7 +65,7 @@ const AsteroidCard: FC<TAsteroidCard> = (props) => {
   return (
     <div className="profile-card">
       <div className="profile-details">
-        <img className="avatar" src={'https://docfiles.blob.core.windows.net/files/asteroid/cerera.png'} alt={`${asteroidInfoDto?.name || 'none'}`}/>
+        <img className="avatar" src={asteroidInfoDto?.image_path} alt={`${asteroidInfoDto?.name || 'none'}`}/>
         <div className="profile-info">
           <h2>Name:   {asteroidInfoDto?.name}</h2>
           <h2>Type:   {asteroidInfoDto?.category}</h2>
