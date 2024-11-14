@@ -31,7 +31,7 @@ const AsteroidTable: FC<AsteroidTableProps> = () => {
          _handleName(null);
       }
    }
-   , [isDisplay]);
+   , [isDisplay, _handleName]);
 
    return (
       <div className="table-container">
