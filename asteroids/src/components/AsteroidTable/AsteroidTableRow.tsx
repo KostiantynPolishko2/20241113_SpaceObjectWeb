@@ -1,7 +1,8 @@
-import React, { FC, useState, useEffect, useCallback, useMemo } from 'react';
+import React, { FC, useState, useEffect, useCallback, useMemo, useContext } from 'react';
 import axios from 'axios';
 import { AsteroidTableRowWrapper } from './AsteroidTableRow.styled';
 import './AsteroidTable.css';
+import { HandleNameContext } from '../Asteroid/Asteroid';
 
 interface IAsteroidItemDto {
    name: string,
@@ -21,7 +22,9 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
    const [asteroidItemsDto, setAsteroidItemsDto] = useState<Array<IAsteroidItemDto>>([]);
    const [clientsError, setClientsError] = useState<IError | null>(null)
 
-   const productOrderRequest = useMemo(() => 
+   const _handleName = useContext(HandleNameContext);
+
+   const spaceObjectRequest = useMemo(() => 
       axios.create({
         baseURL: 'https://spaceobjectsserver.azurewebsites.net/api/SpaceObject',
         method: 'get',
@@ -32,7 +35,7 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
    const handleRequest = useCallback(() => {
 
       if(props.isLoad){
-         productOrderRequest.get('asteroiditems')
+         spaceObjectRequest.get('asteroiditems')
          .then(responce => {
             setAsteroidItemsDto(responce.data);
          })
@@ -40,7 +43,7 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
             setClientsError(error);
          });
       }
-   }, [props.isLoad, productOrderRequest]);
+   }, [props.isLoad, spaceObjectRequest]);
 
    useEffect(() => {
          handleRequest();
@@ -55,17 +58,15 @@ const AsteroidTableRow: FC<TListRow> = (props) => {
    }
 
    return (
-      <AsteroidTableRowWrapper>
          <tbody>
                {asteroidItemsDto.map((item, i) => (
-                  <tr key={i + 1}>
+                  <tr key={i + 1} onClick={_handleName}>
                      <td>{i + 1}</td>
                      <td>{item.name}</td>
                      <td>{item.type}</td>
                   </tr>
                ))}
          </tbody>
-      </AsteroidTableRowWrapper>
    );
 }
 
