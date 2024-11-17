@@ -1,13 +1,15 @@
 import React, {FC, useEffect, useState, useMemo, useCallback} from 'react';
 import './AsteroidCard.css';
 import axios from 'axios';
+import { fetchImagePath } from './api';
+import { BtnImgWrapper, BlockLoad } from './AsteroidCard.styled';
 
 type AsteroidInfoDto = {
   name: string,
   category: string, 
   size: number,
   weight: number,
-  speed: number,
+  speed: number, 
   image_path: string
 }
 
@@ -23,6 +25,8 @@ const AsteroidCard: FC<TAsteroidCard> = (props) => {
 
   const [asteroidInfoDto, setAsteroidInfoDto] = useState<AsteroidInfoDto | null>(null);
   const [clientsError, setClientsError] = useState<IError | null>(null);
+  const [isBtnImg, setIsBtnImg] = useState<boolean>(true);
+  const [imagePath, setImagePath] = useState<string | null>(null);
 
   const spaceObjectRequest = useMemo(() => 
     axios.create({
@@ -37,7 +41,6 @@ const AsteroidCard: FC<TAsteroidCard> = (props) => {
       spaceObjectRequest.get(`asteroid/${props.name}`)
       .then(responce => {
         setAsteroidInfoDto(responce.data);
-        console.log(responce.data);
       })
       .catch(error => {
           setClientsError(error);
@@ -62,10 +65,22 @@ const AsteroidCard: FC<TAsteroidCard> = (props) => {
     );
   }
 
+  const handleImageAI = async (e: React.FormEvent<HTMLElement>) => {
+    setImagePath(await fetchImagePath((e.currentTarget.lastElementChild as HTMLImageElement).alt));
+  }
+
+  const handleBtnImage = () => {
+    setIsBtnImg(true);
+    setImagePath(null);
+  }
+
   return (
     <div className="profile-card">
       <div className="profile-details">
-        <img className="avatar" src={asteroidInfoDto?.image_path} alt={`${asteroidInfoDto?.name || 'none'}`}/>
+        <BtnImgWrapper onClick={handleImageAI} isDisable = {isBtnImg}>
+          <BlockLoad isDisable = {isBtnImg}>CLICK NEW</BlockLoad>
+          <img className="avatar" src={imagePath || asteroidInfoDto?.image_path} alt={`${asteroidInfoDto?.name || 'none'}`}/>
+        </BtnImgWrapper>
         <div className="profile-info">
           <h2>Name:   {asteroidInfoDto?.name}</h2>
           <h2>Type:   {asteroidInfoDto?.category}</h2>
@@ -75,9 +90,9 @@ const AsteroidCard: FC<TAsteroidCard> = (props) => {
         </div>
       </div>
       <div className="actions">
-        <button className="edit-btn" disabled>Edit</button>
-        <button className="post-btn" disabled>Post</button>
-        <button className="delete-btn" disabled>Delete</button>
+        <button className="edit-btn" onClick={() => setIsBtnImg(false)}>Edit</button>
+        <button className="post-btn" onClick={handleBtnImage} disabled>Save</button>
+        <button className="delete-btn" onClick={handleBtnImage}>Cancel</button>
       </div>
     </div>
   );
