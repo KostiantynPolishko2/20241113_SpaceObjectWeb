@@ -67,7 +67,6 @@ const AsteroidCard: FC<TAsteroidCard> = (props) => {
 
   const handleImageAI = async (e: React.FormEvent<HTMLElement>) => {
     setImagePath(await fetchImagePath((e.currentTarget.lastElementChild as HTMLImageElement).alt));
-    console.log('image path', imagePath)
   }
 
   const handleBtnImage = () => {
